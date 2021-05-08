@@ -1,0 +1,10 @@
+﻿I'm sorry, but errors were detected in your script. Please correct the
+errors listed below, and try again.
+
+
+File "game/forest.rpy", line 86: expected statement.
+    ifel examinedcamera == True:
+                        ^
+
+Ren'Py Version: Ren'Py 7.4.4.1439
+Fri May  7 18:34:31 2021
