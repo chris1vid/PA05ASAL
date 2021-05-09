@@ -26,6 +26,16 @@ label start:
         xalign 0.0043 yalign 0.15
     transform love_c2:
         xalign 0.097 yalign 0.15
+    transform farleft:
+        xanchor 0.5 xalign -0.06 yalign 1.0
+    transform left:
+        xanchor 0.5 xalign 0.22 yalign 1.0
+    transform center:
+        xanchor 0.5 xalign 0.5 yalign 1.0
+    transform right:
+        xanchor 0.5 xalign 0.78 yalign 1.0 xzoom -1
+    transform farright:
+        xanchor 0.5 xalign 1.06 yalign 1.0 xzoom -1
 
     init python:
         renpy.music.register_channel ("sound2", "sfx", False)
@@ -41,7 +51,7 @@ label start:
     $ talkedtoangelday1 = False
     $ examinedcamera = False
     jump introforest
-
+          
 
 
 ## *** *** *** *** *** FOREST START
@@ -49,7 +59,9 @@ label start:
     image black = "black.jpg"
     image forest = "forest.jpg"
     scene black with dissolve
+    define fadeabrupt = Fade(0.5, 1.0, 0.0)
     define fadehold = Fade(0.0, 1.0, 1.0)
+    define flash = Fade(0.0, 0.10, .25, color="#fff")
     stop music
     
     play sound "sfx-foliagerustle.mp3"
@@ -60,9 +72,21 @@ label start:
     play sound "sfx-breakbranch.mp3"
     u "{cps=3}..!{/cps}" with vpunch
     u "{cps=2}...{/cps}{cps=10}There you are{/cps}{cps=3}...{/cps}"
+    play music "song-closing.ogg"
     scene forest with fadehold
-    show p01 with moveinleft
+    show p01 at left with moveinleft
     p "..."
+    #
+    python:
+        # Let's show a couple screens that may have buttons on them.
+        # we could use different layers, but this time let's
+        # use the master layer so that they're on the same level.
+        renpy.show_screen("exit_buttons", _layer="master")
+    python:
+        # Makes the program hang out here until the user clicks something.
+        # Doing things in this way lets us show multiple screens with buttons.
+        ui.interact()
+    #
     label introforestmenu:
     menu: 
         "Examine Forest":
@@ -87,14 +111,23 @@ label start:
                 p "On second thought, I should've just kept the stickers on, this thing is ruined."
                 jump introforestmenu
         "Examine Cat":
+            show a01 at right_c with moveinright
             p "Damn flea-bitten stray."
             p "Once I'm done with you, the only thing you'll have to do with reading is your name being in the obituaries."
             menu:
                 "Take His Picture":
-                    "fart"
+                    p "Alright, let's get this over with."
+                    p "Once the school paper has his picture, I'm sure this'll be over."
+                    show black with fadeabrupt
+                    "Patches aims the camera at the cat..."
+                    hide black with flash
+                    jump introforestafterpicture
                 "Not Yet":
                     p "Hmm..."
+                    hide a01 with moveoutright
                     jump introforestmenu
             
+            label introforestafterpicture: #seems labels have to follow indent heiarchy as well, shame.
+                p "Shit! Why is the flash on?!"
             
     return

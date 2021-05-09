@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/forest.rpy", line 86: expected statement.
-    ifel examinedcamera == True:
-                        ^
+File "game/forest.rpy", line 70: Line is indented, but the preceding say statement statement does not expect a block. Please check this line's indentation.
+    python:
+    ^
 
 Ren'Py Version: Ren'Py 7.4.4.1439
-Fri May  7 18:34:31 2021
+Sun May  9 03:29:16 2021
